@@ -1,6 +1,6 @@
 from gi.repository import Gtk, Gdk
 
-def input_dialog(parent, title, message):
+def input_dialog(parent, title, message ,hide=False):
     dialog = Gtk.Dialog(title=title, transient_for=parent, flags=0)
     dialog.set_border_width(10)
 
@@ -10,6 +10,9 @@ def input_dialog(parent, title, message):
     box.add(label)
 
     entry = Gtk.Entry()
+    if hide:
+        entry.set_visibility(False)
+
     box.add(entry)
 
     dialog.add_button("Cancel", Gtk.ResponseType.CANCEL)

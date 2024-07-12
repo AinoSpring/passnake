@@ -1,20 +1,33 @@
 from gi.repository import Gtk, Gdk
 
 from tree import Tree
-from store import PasswordStore
 from input import input_dialog
+from menubar import Menubar
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.realpath("__FILE__"), os.pardir, os.pardir)))
+from passnake import PasswordStore
 
 class App(Gtk.Window):
     def __init__(self):
         super().__init__(title="Passnake GUI")
         self.set_default_size(400, 300)
 
-        self.passphrase = input_dialog(self, "Passphrase", "Enter passphrase:")
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.add(vbox)
+
+        menubar = Menubar(self)
+        vbox.pack_start(menubar, False, False, 0)
+
+        self.passphrase = input_dialog(self, "Passphrase", "Enter passphrase:", hide=True)
         self.store = PasswordStore("passnake.gpg")
 
         self.current_path = []
 
         self.paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
+        vbox.pack_start(self.paned, True, True, 0)
+
         self.tree = Tree(self.populate_tree, self.on_move, self.on_delete, self.on_click, self.on_add)
         self.paned.add(self.tree)
         self.paned.set_position(200)
@@ -35,7 +48,6 @@ class App(Gtk.Window):
                 return True
         self.entry.connect("key-press-event", on_key_press)
 
-        self.add(self.paned)
         self.show_all()
 
     def populate_tree(self, tree_store):

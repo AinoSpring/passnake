@@ -29,6 +29,8 @@ class Tree(Gtk.TreeView):
         super().connect("row-activated", self.on_row_activated)
         super().connect("button-press-event", self.on_button_press)
 
+        super().set_headers_visible(False)
+
     def on_drag_data_get(self, treeview, context, selection_data, info, time):
         model, tree_iter = treeview.get_selection().get_selected()
         if tree_iter:

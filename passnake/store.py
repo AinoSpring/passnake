@@ -1,4 +1,4 @@
-from gpgfile import GPGFile
+from .gpgfile import GPGFile
 import json
 import os
 
@@ -8,6 +8,10 @@ class PasswordStore(GPGFile):
         if home is None:
             home = os.getcwd()
         super().__init__(os.path.join(home, path))
+
+    def change_passphrase(self, old_passphrase, new_passphrase):
+        data = self.load_data(old_passphrase)
+        self.save_data(data, new_passphrase)
 
     def add_entry(self, path, value, passphrase):
         data = self.load_data(passphrase)

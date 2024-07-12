@@ -1,7 +1,10 @@
 import argparse
 import os
 from getpass import getpass
-from store import PasswordStore
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.realpath("__FILE__"), os.pardir, os.pardir)))
+from passnake import PasswordStore
 
 class App:
     def __init__(self):
