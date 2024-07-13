@@ -18,6 +18,8 @@ class PasswordStore(GPGFile):
         location = data
         for entry in path[:-1]:
             location[entry] = location.get(entry, {})
+            if not isinstance(location[entry], dict):
+                location[entry] = {}
             location = location.get(entry)
             if location is None:
                 return None
