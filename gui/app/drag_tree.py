@@ -1,7 +1,7 @@
 from gi.repository import Gtk, Gdk
 
 
-def MakeTreeDraggable(self):
+def make_tree_draggable(self):
     self.entry_tree.enable_model_drag_source(
         Gdk.ModifierType.BUTTON1_MASK,
         [Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, 0)],
